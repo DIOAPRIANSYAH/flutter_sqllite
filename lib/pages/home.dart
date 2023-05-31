@@ -14,74 +14,134 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int count = 0;
   List<Item> itemList = [];
+
+  @override
+  void initState() {
+    updateListView();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Daftar Item'),
+      appBar: AppBar(
+        title: Text(
+          'Daftar Item',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: createListView(),
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  child: const Text('Tambah Item'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EntryForm()),
-                    );
-                  },
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: createListView(),
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 30),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 74),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
-            )
-          ],
-        ));
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EntryForm(),
+                  ),
+                ).then((value) {
+                  updateListView();
+                });
+              },
+              child: const Text(
+                'Tambah Item',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   ListView createListView() {
     TextStyle? textStyle = Theme.of(context).textTheme.headline5;
     return ListView.builder(
+        padding: EdgeInsets.only(top: 10),
         itemCount: count,
         itemBuilder: (BuildContext context, int index) => Card(
               color: Colors.white,
               elevation: 2.0,
               child: ListTile(
                 leading: const CircleAvatar(
-                  backgroundColor: Colors.red,
-                  child: Icon(Icons.ad_units),
+                  backgroundColor: Colors.green,
+                  child: Icon(
+                    Icons.add_task_outlined,
+                    size: 28,
+                    color: Colors.white,
+                  ),
                 ),
-                title: Text(
-                  itemList[index].name,
-                  style: textStyle,
+                title: Text(itemList[index].name, style: textStyle),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Harga: ${itemList[index].price.toString()}',
+                    ),
+                    Text(
+                      'Stok: ${itemList[index].stok.toString()}',
+                    ),
+                    Text('Kode Barang: ${itemList[index].kodeBarang}'),
+                  ],
                 ),
-                subtitle: Text(itemList[index].price.toString()),
                 trailing: GestureDetector(
-                  child: const Icon(Icons.delete),
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                    size: 40,
+                  ),
                   onTap: () async {
-                    // 3 TODO: delete by id
+                    deleteItem(itemList[index].id);
                   },
                 ),
-                onTap: () async {},
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EntryForm(item: itemList[index]),
+                    ),
+                  ).then((value) {
+                    updateListView();
+                  });
+                },
               ),
             ));
+  }
+
+  void deleteItem(int id) async {
+    await SQLHelper.deleteItem(id);
+    updateListView();
   }
 
   void updateListView() {
     final Future<Database> dbFuture = SQLHelper.db();
     dbFuture.then((database) {
-      // TODO: get all item from DB
       Future<List<Item>> itemListFuture = SQLHelper.getItemList();
       itemListFuture.then((itemList) {
         setState(() {
           this.itemList = itemList;
           count = itemList.length;
+          print(count.toString());
         });
       });
     });
