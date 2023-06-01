@@ -3,10 +3,20 @@
 A new Flutter project.
 
 ## Getting Started
+## Read Data
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/95058b62-e6e2-44c0-9bed-aba831358048)
 
-![image](https://github.com/DIOAPRIANSYAH/flutter_http/assets/92065809/4d3e4fd3-bf88-40cc-863d-1ddec12765b7)
-![image](https://github.com/DIOAPRIANSYAH/flutter_http/assets/92065809/54100f1a-add6-425d-be66-2c08472cee61)
-![image](https://github.com/DIOAPRIANSYAH/flutter_http/assets/92065809/3450f243-8c08-43ba-bee4-1a8fd34fcf25)
+## Create Data
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/a4d55380-890d-4e82-97f7-269361bfe9b4)
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/2e79a18d-2fb1-4a40-a11f-53359d18f640)
+
+## Update Data
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/b7c81200-875b-4930-aa13-299feaabf2a2)
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/9e85272b-c139-45d2-bec2-ad7a3acb219e)
+
+## Delete Data
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/fd366246-9bb0-4a9e-a404-fb148ff5dbb6)
+![image](https://github.com/DIOAPRIANSYAH/flutter_sqllite/assets/92065809/24bdc5e2-06bf-4c5d-a8ab-5b9b03440d31)
 
 
 This project is a starting point for a Flutter application.
